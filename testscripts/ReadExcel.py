@@ -1,5 +1,8 @@
+from hashlib import new
+
 import xlrd
 from selenium import webdriver
+from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
@@ -17,6 +20,9 @@ company_name = driver.find_element_by_id("Form_submitForm_CompanyName")
 industry_name = driver.find_element_by_id("Form_submitForm_Industry")
 phone_no = driver.find_element_by_id("Form_submitForm_Contact")
 country_name = driver.find_element_by_id("Form_submitForm_Country")
+
+industry_nameSelect = Select(industry_name)
+country_nameSelect = Select(country_name)
 
 workbook = xlrd.open_workbook("C://Users//santo//Desktop//Wipro_Cadidate_ID//DataSheet.xlsx")
 sheet = workbook.sheet_by_name("Sheet1")
@@ -47,5 +53,10 @@ for curr_row in range(1, rowsCount):
     email_id.send_keys(email)
     job_title.clear()
     job_title.send_keys(title)
-    driver.quit()
+    industry_nameSelect.select_by_visible_text(industry)
+    country_nameSelect.select_by_visible_text(country)
+    phone_no.clear()
+    phone_no.send_keys(phone)
+
+driver.quit()
 
